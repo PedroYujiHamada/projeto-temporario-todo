@@ -1,8 +1,28 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, TextInput, Button, FlatList} from 'react-native';
 import logo from "./assets/pngegg.png";
+import { useState } from 'react';
 
 export default function App() {
+  const[data, setData] = useState([
+    {id: "1", descricao: "Tarefa 1", data: "2025-01-01", realizado: true},
+    {id: "2", descricao: "Tarefa 2", data: "2025-01-02", realizado: false},
+    {id: "3", descricao: "Tarefa 3", data: "2025-01-03", realizado: true},
+    {id: "4", descricao: "Tarefa 4", data: "2025-01-04", realizado: false},
+    {id: "5", descricao: "Tarefa 5", data: "2025-01-05", realizado: false},
+  ]);
+
+  const Item = (item) => {
+return(
+  <View>
+    <Text>{item.realizado}</Text>
+    <View>
+      <Text>{item.descricao}</Text>
+      <Text>{item.data}</Text>
+    </View>
+  </View>
+)
+  };
   return (
     <View style={styles.container}>
       <View style={styles.viewLogo}>
@@ -13,7 +33,10 @@ export default function App() {
         <TextInput style={styles.inputTask} placeholder="Adicionar Uma Nova Tarefa"/>
         <Button title="Adicionar"/>
         </View>
-        <FlatList style={styles.taskList}/>
+        <FlatList style={styles.taskList}
+        data={data}
+        keyExtractor={item => item.id.toString()}
+        renderItem={Item}/>
       <StatusBar style="auto" />
     </View>
   );
